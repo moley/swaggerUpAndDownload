@@ -1,0 +1,49 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: "spica rest communication component"
+  description: "Rest API for the communication component of spica communication server"
+servers:
+  - url: http://localhost/api
+
+paths:
+
+  /documentstore/download/{documentName:.+}:
+    get:
+      tags:
+        - communication
+      operationId: "downloadDocument"
+      parameters:
+        - in: path
+          name: documentName
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: documents
+          content:
+            application/binary:
+              schema:
+                type: string
+                format: binary
+
+  /documentstore/upload:
+    post:
+      tags:
+        - communication
+      operationId: "uploadDocument"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                securityId:
+                  type: string
+                document:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: 'Null response'
